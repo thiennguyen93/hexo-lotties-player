@@ -1,0 +1,24 @@
+{
+  "name": "hexo-lotties-player",
+  "version": "1.0.0",
+  "description": "A Hexo plugin that adds lotties file support",
+  "main": "index",
+  "repository": "thiennguyen93/hexo-filter-github-emojis",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "hexo",
+    "hexo lotties",
+    "hexo lotties player",
+    "lotties",
+    "lotties player",
+    "thiennguyen",
+    "thien nguyen",
+    "thiennguyen.dev"
+  ],
+  "author": "Thien Nguyen <hi@thiennguyen.dev> (http://thiennguyen.dev)",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
