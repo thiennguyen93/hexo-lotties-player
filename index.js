@@ -18,7 +18,7 @@ function lottiesfile(args, keys) {
   // Duyệt qua các khóa để tạo đối tượng
   keys.forEach(key => {
     // Tạo biểu thức chính quy để tìm giá trị
-    const regex = new RegExp(`${key}=(.*?)(,|$)`);
+    const regex = new RegExp(`(?:^|,)${key}=(.*?)(?:,|$)`);
     let found = false;
 
     // Duyệt qua từng phần tử trong args
@@ -36,7 +36,7 @@ function lottiesfile(args, keys) {
       if (args.includes(key)) {
         options[key] = true; // Gán true nếu key tồn tại trong args
       } else {
-        options[key] = undefined; // Gán là undefined nếu không tìm thấy
+        // options[key] = undefined; // Gán là undefined nếu không tìm thấy
       }
     }
   });
@@ -48,6 +48,39 @@ function lottiesfile(args, keys) {
 hexo.extend.helper.register("lotties_player", (name) => renderEmoji(name));
 hexo.extend.tag.register("lotties_player", (args) => {
   return renderEmoji(args)
+});
+
+function removeLeadingU(input) {
+  return input.startsWith('u') ? input.substring(1) : input;
+}
+
+hexo.extend.tag.register("lotties_emoji", (args) => {
+  const defaultConfigs = { 
+    width: "1em",
+    height: "1em",
+    loop: true,
+    autoplay: true,
+    hover: undefined,
+    backward: false,
+    speed: 1,
+    bounce: "normal",
+    controls: false,
+    background: "transparent",
+    className: "thiennguyen-lotties-emoji is-inline-block",
+    code: "u1f600"
+  }
+  // get tag config
+  const argsList = {...defaultConfigs, ...lottiesfile(args, ["code"])}
+  const ucharCode = argsList.code.trim()
+  if (!ucharCode) {
+    throw new Error("Missing Emoji code")
+  }
+  // https://fonts.gstatic.com/s/e/notoemoji/latest/${ucharCode}/lottie.json
+  // https://fonts.gstatic.com/s/e/notoemoji/latest/1f603/lottie.json
+
+  defaultConfigs.src = `https://fonts.gstatic.com/s/e/notoemoji/latest/${removeLeadingU(ucharCode)}/lottie.json`;
+  console.log("@@@src", defaultConfigs.src)
+  return renderEmoji(args, defaultConfigs)
 });
 
 if (options.inject !== false) {
@@ -75,7 +108,7 @@ function renderStyle(width, height) {
   });
 }
 
-function renderEmoji(args) {
+function renderEmoji(args, defaultConfig = {}) {
   let argsList = { 
     src: undefined, 
     width: undefined,
@@ -88,7 +121,8 @@ function renderEmoji(args) {
     bounce: "normal",
     controls: false,
     background: "transparent",
-    className: ""
+    className: "",
+    ...defaultConfig,
   }
   argsList = {...argsList, ...lottiesfile(args, Object.keys(argsList))}
 
