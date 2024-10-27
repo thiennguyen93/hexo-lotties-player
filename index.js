@@ -77,9 +77,7 @@ hexo.extend.tag.register("lotties_emoji", (args) => {
   }
   // https://fonts.gstatic.com/s/e/notoemoji/latest/${ucharCode}/lottie.json
   // https://fonts.gstatic.com/s/e/notoemoji/latest/1f603/lottie.json
-
   defaultConfigs.src = `https://fonts.gstatic.com/s/e/notoemoji/latest/${removeLeadingU(ucharCode)}/lottie.json`;
-  console.log("@@@src", defaultConfigs.src)
   return renderEmoji(args, defaultConfigs)
 });
 
