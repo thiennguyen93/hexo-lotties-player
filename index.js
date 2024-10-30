@@ -82,7 +82,7 @@ hexo.extend.tag.register("lotties_emoji", (args) => {
 });
 
 if (options.inject !== false) {
-  hexo.extend.injector.register("head_begin", `<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>`);
+  hexo.extend.injector.register("head_begin", `<script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@latest/dist/dotlottie-wc.js"></script>`);
 }
 
 function fillProperty(condition, value, fallback = "") {
@@ -127,7 +127,7 @@ function renderEmoji(args, defaultConfig = {}) {
   if (!argsList.src) {
     throw new Error("hexo-lotties-player: Missing src property")
   }
-  return `<dotlottie-player class="thiennguyen-lotties-player${fillProperty(argsList.className, ()=>` ${argsList.className}`)}" src="${argsList.src}" background="${argsList.background || "transparent"}" ${renderStyle(argsList.width, argsList.height)} ${fillProperty(argsList.width, ()=>`width="${argsList.width}"`)} ${fillProperty(argsList.height, ()=>`height="${argsList.height}"`)} ${fillProperty(argsList.speed, ()=>{
+  return `<dotlottie-wc class="thiennguyen-lotties-player${fillProperty(argsList.className, ()=>` ${argsList.className}`)}" src="${argsList.src}" backgroundColor="${argsList.background || "transparent"}" ${renderStyle(argsList.width, argsList.height)} ${fillProperty(argsList.width, ()=>`width="${argsList.width}"`)} ${fillProperty(argsList.height, ()=>`height="${argsList.height}"`)} ${fillProperty(argsList.speed, ()=>{
     let speed = Number(argsList.speed)
     if (speed >= 0) {
       return `speed="${speed}"`
@@ -136,5 +136,5 @@ function renderEmoji(args, defaultConfig = {}) {
       return `speed="0"`
     }
     return `speed="1"`
-  }, `speed="1"`)} ${fillProperty(argsList.bounce, ()=>`playMode="bounce"`,`playMode="normal"`)} ${fillProperty(argsList.loop, ()=>"loop")} ${fillProperty(argsList.autoplay, ()=>"autoplay")} ${fillProperty(argsList.hover, ()=>"hover")} ${fillProperty(argsList.backward, ()=>`direction="${argsList.backward?'-1':'1'}"`)} ${fillProperty(argsList.controls, ()=>"controls","")}></dotlottie-player>`
+  }, `speed="1"`)} ${fillProperty(argsList.bounce, ()=>`playMode="bounce"`,`playMode="normal"`)} ${fillProperty(argsList.loop, ()=>"loop")} ${fillProperty(argsList.autoplay, ()=>"autoplay")} ${fillProperty(argsList.hover, ()=>"hover")} ${fillProperty(argsList.backward, ()=>`direction="${argsList.backward?'-1':'1'}"`)} ${fillProperty(argsList.controls, ()=>"controls","")}></dotlottie-wc>`
 }
